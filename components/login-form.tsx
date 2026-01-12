@@ -1,6 +1,7 @@
 "use client"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
 import {
   Card,
   CardContent,
@@ -15,6 +16,15 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+
+const [email, setEmail] = useState("");
+
+const Change = (e : any) => {
+  setEmail(e.target.value);
+}
+useEffect(() => {
+  console.log(email);
+}, [email]);
 
 export function LoginForm({
   className,
@@ -37,6 +47,7 @@ export function LoginForm({
                 <Input
                   id="email"
                   type="email"
+                  onChange={Change}
                   placeholder="m@example.com"
                   required
                 />
