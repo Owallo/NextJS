@@ -1,51 +1,101 @@
 "use client"
+import { useIsCalcul } from "@/hooks/calculatrice"
 import { Label } from "@/components/ui/label"
-import { useEffect, useState } from "react"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 export function CalculForm() {
-    const [input, setInput] = useState(0);
-    const [input2, setInput2] = useState(0);
-    const [result, setResult] = useState(0);
-    const num1 = (e: any) => {
-        setInput(Number(e.target.value));
-    };
-    const num2 = (e: any) => {
-        setInput2(Number(e.target.value));
-    };
-    useEffect(() => {
-        setResult(input + input2);
-        console.log("Result:", result);
-    }, [input, input2]);
-    
+    const calcul = useIsCalcul()
 
     return (
         <div style={{ padding: "20px" }}>
-            <h1>Calculatrice</h1>
             <form>
                 <div style={{ marginBottom: "15px" }}>
-                    <Label htmlFor="input1">Nombre 1:</Label>
-                    <Input
-                        id="input1"
-                        type="number"
-                        value={input}
-                        onChange={num1}
-                        placeholder="Entrez le premier nombre"
-                        style={{ marginLeft: "10px", padding: "5px" }}
-                    />
-                </div>
-                <div style={{ marginBottom: "15px" }}>
-                    <Label htmlFor="input2">Nombre 2:</Label>
-                    <Input
-                        id="input2"
-                        type="number"
-                        value={input2}
-                        onChange={num2}
-                        placeholder="Entrez le deuxième nombre"
-                        style={{ marginLeft: "10px", padding: "5px" }}
-                    />
+                    <Label>Calculatrice:</Label>
+                    <Label style={{ gridColumn: "span 4", marginTop: "10px" }}>Input: {calcul.input}</Label>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px", marginTop: "10px" }}>
+                        {[1, 2, 3].map((num) => (
+                            <Button
+                                key={num}
+                                type="button"
+                                onClick={() => calcul.handleNumberClick(num)}
+                                style={{ padding: "10px", fontSize: "16px" }}
+                            >
+                                {num}
+                            </Button>
+                        ))}
+                        <Button
+                            type="button"
+                            onClick={calcul.button1Click}
+                            style={{ marginLeft: "0px", padding: "10px", fontSize: "16px", backgroundColor: "#FF9800", color: "white" }}
+                        >
+                            +
+                        </Button>
+                        {[4, 5, 6].map((num) => (
+                            <Button
+                                key={num}
+                                type="button"
+                                onClick={() => calcul.handleNumberClick(num)}
+                                style={{ padding: "10px", fontSize: "16px" }}
+                            >
+                                {num}
+                            </Button>
+                        ))}
+                        <Button
+                            type="button"
+                            onClick={calcul.button2Click}
+                            style={{ padding: "10px", fontSize: "16px", backgroundColor: "#FF9800", color: "white" }}
+                        >
+                            -
+                        </Button>
+                        {[7, 8, 9].map((num) => (
+                            <Button
+                                key={num}
+                                type="button"
+                                onClick={() => calcul.handleNumberClick(num)}
+                                style={{ padding: "10px", fontSize: "16px" }}
+                            >
+                                {num}
+                            </Button>
+                        ))}
+                        <Button
+                            type="button"
+                            onClick={calcul.button3Click}
+                            style={{ padding: "10px", fontSize: "16px", backgroundColor: "#FF9800", color: "white" }}
+                        >
+                            /
+                        </Button>
+                        <Button
+                            type="button"
+                            onClick={() => calcul.handleNumberClick(0)}
+                            style={{ padding: "10px", fontSize: "16px", gridColumn: "span 2" }}
+                        >
+                            0
+                        </Button>
+                        <Button
+                            type="button"
+                            onClick={calcul.handleEquals}
+                            style={{ padding: "10px", fontSize: "16px", backgroundColor: "#4CAF50", color: "white", gridColumn: "span 1" }}
+                        >
+                            =
+                        </Button>
+                        <Button
+                            type="button"
+                            onClick={calcul.button4Click}
+                            style={{ padding: "10px", fontSize: "16px", backgroundColor: "#FF9800", color: "white" }}
+                        >
+                            x
+                        </Button>
+                        <Button
+                            type="button"
+                            onClick={calcul.clear}
+                            style={{ padding: "10px", fontSize: "16px", backgroundColor: "red", color: "white", gridColumn: "span 4" }}
+                        >
+                            Clear
+                        </Button>
+                    </div>
                 </div>
                 <div style={{ marginTop: "20px" }}>
-                    <strong>Résultat: {result}</strong>
+                    <strong>Résultat: {calcul.result}</strong>
                 </div>
             </form>
         </div>
